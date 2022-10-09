@@ -1408,12 +1408,12 @@ static int scrypt_N_1_1_256_4way( const uint32_t *input,	uint32_t *output,
 extern int scanhash_scrypt( struct work *work, uint32_t max_nonce,
                             uint64_t *hashes_done, struct thr_info *mythr )
 {
-   uint32_t _ALIGN(64) hash[  8*SCRYPT_THROUGHPUT ];
+   uint32_t _ALIGN(64) hash[  80*SCRYPT_THROUGHPUT ];
    uint32_t _ALIGN(64) data[ 20*SCRYPT_THROUGHPUT ];
    uint32_t *pdata = work->data;
    uint32_t *ptarget = work->target;
    uint32_t midstate[8];
-   uint32_t n = pdata[19] - 1;
+   uint32_t n = pdata[25] - 1;
    int thr_id = mythr->id;  
    int i;
    volatile uint8_t *restart = &(work_restart[thr_id].restart);
@@ -1472,7 +1472,7 @@ extern int scanhash_scrypt( struct work *work, uint32_t max_nonce,
          if ( unlikely( valid_hash( hash + i*8, ptarget ) && !opt_benchmark ) )
          {
 //            applog( LOG_INFO, "Thread %d, Lane %d", thr_id,i );
-            pdata[19] = data[i * 20 + 19];
+            pdata[25] = data[i * 20 + 19];
             submit_solution( work, hash + i * 8, mythr );
          }
 
@@ -1481,8 +1481,8 @@ extern int scanhash_scrypt( struct work *work, uint32_t max_nonce,
 
    } while ( likely( ( n < ( max_nonce - SCRYPT_THROUGHPUT ) ) && !(*restart) ) );
 	
-	*hashes_done = n - pdata[19];
-	pdata[19] = n;
+	*hashes_done = n - pdata[25];
+	pdata[25] = n;
 	return 0;
 }
 
