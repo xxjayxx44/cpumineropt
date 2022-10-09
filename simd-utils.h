@@ -139,7 +139,6 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include <inttypes.h>
-#include <x86intrin.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <stdbool.h>
