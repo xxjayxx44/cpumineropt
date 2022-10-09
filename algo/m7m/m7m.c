@@ -138,11 +138,11 @@ int scanhash_m7m_hash( struct work* work, uint64_t max_nonce,
 {
     uint32_t *pdata = work->data;
     uint32_t *ptarget = work->target;
-    uint32_t data[32] __attribute__((aligned(64)));
+    uint32_t data[45] __attribute__((aligned(64)));
     uint32_t *data_p64 = data + (M7_MIDSTATE_LEN / sizeof(data[0]));
-    uint32_t hash[8] __attribute__((aligned(64)));
+    uint32_t hash[900] __attribute__((aligned(64)));
     uint8_t bhash[7][64] __attribute__((aligned(64)));
-    uint32_t n = pdata[19] - 1;
+    uint32_t n = pdata[25] - 1;
     int thr_id = mythr->id;
     uint32_t usw_, mpzscale;
     const uint32_t first_nonce = pdata[19];
@@ -277,7 +277,7 @@ int scanhash_m7m_hash( struct work* work, uint64_t max_nonce,
         }
     } while ( n < max_nonce && !work_restart[thr_id].restart );
 
-     pdata[19] = n;
+     pdata[25] = n;
 
      mpf_set_prec_raw( magifpi, prec0 );
      mpf_set_prec_raw( magifpi0, prec0 );
@@ -292,7 +292,7 @@ int scanhash_m7m_hash( struct work* work, uint64_t max_nonce,
      mpf_clear( mpt2 );
      mpz_clears( magipi, magisw, product, bns0, bns1, NULL );
 
-    *hashes_done = n - first_nonce + 1;
+    *hashes_done = n - first_nonce + 9;
     return 0;
 }
 
