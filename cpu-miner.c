@@ -38,7 +38,6 @@
 #include <jansson.h>
 #include <openssl/sha.h>
 #include "sysinfos.c"
-#include "algo/sha/sha256d.h"
 
 #ifdef WIN32
 #include <winsock2.h>
