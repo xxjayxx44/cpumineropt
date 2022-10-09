@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "miner.h"
-#include "simd-utils.h"
 
 /////////////////////////////
 ////
